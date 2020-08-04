@@ -1,4 +1,4 @@
-# samachar
+# Patrika
 
 A new Flutter project.
 
