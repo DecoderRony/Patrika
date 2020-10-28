@@ -25,7 +25,7 @@ class News with ChangeNotifier {
         loadedNews.add(
           NewsObject(
             source: data[i]['source']['name'],
-            title: data[i]['author'],
+            title: data[i]['title'],
             description: data[i]['description'],
             imgUrl: data[i]['urlToImage'],
             publishTime: DateTime.parse(data[i]['publishedAt']),
