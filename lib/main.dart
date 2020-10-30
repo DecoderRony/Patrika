@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:samachar/screens/detailedNews.dart';
 
 import './provider/news.dart';
 import './screens/landing.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         title: 'Samachar Patrika',
         theme: ThemeData.dark(),
         home: LandingScreen(),
+        routes: {
+          '/detail' : (context) => Detail(),
+        },
       ),
     );
   }

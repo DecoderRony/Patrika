@@ -43,72 +43,76 @@ class _LandingScreenState extends State<LandingScreen> {
             child: StaggeredGridView.countBuilder(
                 crossAxisCount: 4,
                 itemBuilder: (ctx, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Stack(
-                      fit: StackFit.expand,
-                      overflow: Overflow.clip,
 
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: news[index].imgUrl != null
-                              ? Image.network(
-                            news[index].imgUrl,
-                            fit: BoxFit.cover,
-                            color: Colors.black45,
-                            colorBlendMode: BlendMode.darken,
-                          )
-                              : Container(
-                            color: Colors.white60,
-                          ),
-                        ),
-                        Positioned(
-                          top: 10,
-                          right: 10,
-                          child: Text(
-                            DateFormat('dd/MMM/yyyy')
-                                .format(news[index].publishTime),
-                          ),
-                        ),
-                        SizedBox(height: 10,),
-                        Positioned(
-                          bottom: 5,
-                          left: 10,
-                          child: FittedBox(
-                            child: Container(
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width * 0.9,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  news[index].title != null
-                                      ? news[index].title.length >= 23 ?
-                                  Text(
-                                    '${news[index].title.substring(0,23)}...',
-                                    style: TextStyle(fontSize: 16),
-                                  ): Text(
-                                    '${news[index].title}',
-                                    style: TextStyle(fontSize: 16),
-                                  )
-                                      : Text('Today\'s Latest News'),
-                                  Text(
-                                    ' - ${news[index].source}',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushNamed('/detail', arguments: news[index]);
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        overflow: Overflow.clip,
+
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: news[index].imgUrl != null
+                                ? Image.network(
+                              news[index].imgUrl,
+                              fit: BoxFit.cover,
+                              color: Colors.black45,
+                              colorBlendMode: BlendMode.darken,
+                            )
+                                : Container(
+                              color: Colors.white60,
+                              child: Icon(Icons.broken_image, size: 60,),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  );
-                },
+                          Positioned(
+                            top: 10,
+                            right: 10,
+                            child: Text(
+                              DateFormat('dd/MMM/yyyy')
+                                  .format(news[index].publishTime),
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          Positioned(
+                            bottom: 5,
+                            left: 10,
+                            child: FittedBox(
+                              child: Container(
+                                width: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .width * 0.9,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    news[index].title != null
+                                        ? news[index].title.length >= 23 ?
+                                    Text(
+                                      '${news[index].title.substring(0,23)}...',
+                                      style: TextStyle(fontSize: 16),
+                                    ): Text(
+                                      '${news[index].title}',
+                                      style: TextStyle(fontSize: 16),
+                                    )
+                                        : Text('Today\'s Latest News'),
+                                    Text(
+                                      ' - ${news[index].source}',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                 staggeredTileBuilder: (int index) =>
                 new StaggeredTile.count(2, index.isEven ? 2 : 1),
               mainAxisSpacing: 4.0,
@@ -116,9 +120,12 @@ class _LandingScreenState extends State<LandingScreen> {
 
                 itemCount: news.length,
             )
-          ),
-        ),
-      ),
-    );
+          );
+      
   }
+  ),
+  ),
+  ),
+  ),
+  );
 }
