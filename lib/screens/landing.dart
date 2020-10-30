@@ -78,7 +78,7 @@ class _LandingScreenState extends State<LandingScreen> {
                               children: [
                                 news[index].title != null
                                     ? Text(
-                                        '- ${news[index].title}',
+                                        '${news[index].title}',
                                         style: TextStyle(fontSize: 16),
                                       )
                                     : Text('Todays Latest News'),
