@@ -64,6 +64,7 @@ class _LandingScreenState extends State<LandingScreen> {
             child: StaggeredGridView.countBuilder(
                 crossAxisCount: 4,
                 itemBuilder: (ctx, index) {
+
                   return GestureDetector(
                     onTap: (){
                       Navigator.of(context).pushNamed('/detail', arguments: news[index]);
@@ -133,9 +134,6 @@ class _LandingScreenState extends State<LandingScreen> {
                           )
                         ],
                       ),
-                    ),
-                  );
-                },
                 staggeredTileBuilder: (int index) =>
                 new StaggeredTile.count(2, index.isEven ? 2 : 1),
               mainAxisSpacing: 4.0,
@@ -143,9 +141,12 @@ class _LandingScreenState extends State<LandingScreen> {
 
                 itemCount: news.length,
             )
-          ),
-        ),
-      ),
-    );
+          );
+      
   }
+  ),
+  ),
+  ),
+  ),
+  );
 }
