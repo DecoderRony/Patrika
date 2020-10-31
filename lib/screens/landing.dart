@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:samachar/provider/themeState.dart';
 
 import '../provider/news.dart';
 
@@ -12,6 +13,8 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   var init = true;
+  var toggleSwitch = false;
+  Color bgcolor = Colors.black26;
   @override
   void didChangeDependencies() {
     if (init) {
@@ -24,14 +27,32 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     var news = Provider.of<News>(context).news;
+    ThemeState _themeChanger = Provider.of<ThemeState>(context);
 
     return Scaffold(
-      backgroundColor: Colors.black26,
+      backgroundColor: bgcolor,
       appBar: AppBar(
-        elevation: 0,
         title: Text('Patrika'),
         centerTitle: true,
+        actions: [
+          toggleSwitch != true ? IconButton(icon: Icon(Icons.brightness_high), onPressed: (){
+            _themeChanger.setTheme(ThemeData(primaryColor: Colors.white, ));
+            setState(() {
+              toggleSwitch = true;
+              bgcolor = Colors.white;
+            });
+          },):IconButton(icon: Icon(Icons.brightness_2),
+            onPressed: (){
+              _themeChanger.setTheme(ThemeData.dark());
+              setState(() {
+                toggleSwitch = false;
+                bgcolor = Colors.black26;
+              });
+            },
+          )
+        ],
       ),
+
       // drawer: Drawer(),
       body: ClipRRect(
         borderRadius: BorderRadius.only(
@@ -76,7 +97,7 @@ class _LandingScreenState extends State<LandingScreen> {
                             right: 10,
                             child: Text(
                               DateFormat('dd/MMM/yyyy')
-                                  .format(news[index].publishTime),
+                                  .format(news[index].publishTime), style: TextStyle(color: Colors.white),
                             ),
                           ),
                           SizedBox(height: 10,),
@@ -96,15 +117,15 @@ class _LandingScreenState extends State<LandingScreen> {
                                         ? news[index].title.length >= 23 ?
                                     Text(
                                       '${news[index].title.substring(0,23)}...',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 16, color: Colors.white),
                                     ): Text(
                                       '${news[index].title}',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 16, color: Colors.white),
                                     )
                                         : Text('Today\'s Latest News'),
                                     Text(
                                       ' - ${news[index].source}',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 16, color: Colors.white),
                                     ),
                                   ],
                                 ),
