@@ -6,21 +6,31 @@ class Detail extends StatelessWidget {
   Widget build(BuildContext context) {
     NewsObject news = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-      ),
+
       body: Container(
         child: Column(
           children: [
-            news.imgUrl != null ?
-            Container(
-              child: Image.network(news.imgUrl),
-            ):Container(
-              width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.3,
-      color: Colors.white60,
-      child: Icon(Icons.broken_image, size: 60,),
-    ),
+            Stack(
+              overflow: Overflow.visible,
+              children: [
+
+                news.imgUrl != null ?
+                Container(
+                  child: Image.network(news.imgUrl),
+                ):Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  color: Colors.white60,
+                  child: Icon(Icons.broken_image, size: 60,),
+                ),
+                Positioned(
+                top: 50,
+                left: 15
+                ,child: GestureDetector(onTap: Navigator.of(context).pop,child: Icon(Icons.arrow_back_ios, size: 25, color: Colors.white,))),
+
+              ],
+            ),
+
             SizedBox(height: 5,),
             Padding(
               padding: const EdgeInsets.all(8.0),
