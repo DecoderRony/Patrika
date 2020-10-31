@@ -15,6 +15,7 @@ class _LandingScreenState extends State<LandingScreen> {
   var init = true;
   var toggleSwitch = false;
   Color bgcolor = Colors.black26;
+
   @override
   void didChangeDependencies() {
     if (init) {
@@ -26,7 +27,9 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var news = Provider.of<News>(context).news;
+    var news = Provider
+        .of<News>(context)
+        .news;
     ThemeState _themeChanger = Provider.of<ThemeState>(context);
 
     return Scaffold(
@@ -35,14 +38,15 @@ class _LandingScreenState extends State<LandingScreen> {
         title: Text('Patrika'),
         centerTitle: true,
         actions: [
-          toggleSwitch != true ? IconButton(icon: Icon(Icons.brightness_high), onPressed: (){
-            _themeChanger.setTheme(ThemeData(primaryColor: Colors.white, ));
+          toggleSwitch != true ? IconButton(
+            icon: Icon(Icons.brightness_high), onPressed: () {
+            _themeChanger.setTheme(ThemeData(primaryColor: Colors.white,));
             setState(() {
               toggleSwitch = true;
               bgcolor = Colors.white;
             });
-          },):IconButton(icon: Icon(Icons.brightness_2),
-            onPressed: (){
+          },) : IconButton(icon: Icon(Icons.brightness_2),
+            onPressed: () {
               _themeChanger.setTheme(ThemeData.dark());
               setState(() {
                 toggleSwitch = false;
@@ -60,14 +64,18 @@ class _LandingScreenState extends State<LandingScreen> {
         child: Container(
           child: Padding(
             padding: const EdgeInsets.only(top: 5),
-            
-            child: StaggeredGridView.countBuilder(
+
+            child: RefreshIndicator(
+              onRefresh: () =>
+                Provider.of<News>(context, listen: false).getNews(),
+
+              child: StaggeredGridView.countBuilder(
                 crossAxisCount: 4,
                 itemBuilder: (ctx, index) {
-
                   return GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).pushNamed('/detail', arguments: news[index]);
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          '/detail', arguments: news[index]);
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -97,7 +105,8 @@ class _LandingScreenState extends State<LandingScreen> {
                             right: 10,
                             child: Text(
                               DateFormat('dd/MMM/yyyy')
-                                  .format(news[index].publishTime), style: TextStyle(color: Colors.white),
+                                  .format(news[index].publishTime),
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                           SizedBox(height: 10,),
@@ -116,16 +125,19 @@ class _LandingScreenState extends State<LandingScreen> {
                                     news[index].title != null
                                         ? news[index].title.length >= 23 ?
                                     Text(
-                                      '${news[index].title.substring(0,23)}...',
-                                      style: TextStyle(fontSize: 16, color: Colors.white),
-                                    ): Text(
+                                      '${news[index].title.substring(0, 23)}...',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    ) : Text(
                                       '${news[index].title}',
-                                      style: TextStyle(fontSize: 16, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
                                     )
                                         : Text('Today\'s Latest News'),
                                     Text(
                                       ' - ${news[index].source}',
-                                      style: TextStyle(fontSize: 16, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
                                     ),
                                   ],
                                 ),
@@ -134,19 +146,20 @@ class _LandingScreenState extends State<LandingScreen> {
                           )
                         ],
                       ),
+                    ),
+                  );
+                },
                 staggeredTileBuilder: (int index) =>
                 new StaggeredTile.count(2, index.isEven ? 2 : 1),
-              mainAxisSpacing: 4.0,
-              crossAxisSpacing: 4.0,
+                mainAxisSpacing: 1.0,
+                crossAxisSpacing: 1.0,
 
                 itemCount: news.length,
-            )
-          );
-      
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
-  ),
-  ),
-  ),
-  ),
-  );
 }
