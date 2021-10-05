@@ -1,6 +1,5 @@
 # Patrika
-
-A new Flutter project.
+A news application is a big interactive database that tells a news story and this project is about that. This project has many facilities like "Light Mode" ," Dark Mode". The whole idea is to putting latest news in front of you. This application is developed by Flutter and with the use of "Free news api".
 
 ## Getting Started
 
